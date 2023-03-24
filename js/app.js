@@ -1,4 +1,17 @@
 
+
+function getDiceRollArray(diceCount){
+    const newDiceRolls = []
+    for(let i = 0; i < diceCount; i++){
+        newDiceRolls.push(Math.floor(Math.random()*6) +1)
+    }
+    return newDiceRolls
+}
+
+getDiceRollArray(3)
+
+
+
 // Hero
 const hero = {
     elementId: "hero",
@@ -7,7 +20,6 @@ const hero = {
     health: 60,
     diceRoll: [3, 1, 4],
     diceCount: 3,
-
 }
 
 // Orc // 
@@ -22,22 +34,23 @@ const monster = {
 
 //
 function renderCharacter(data) {
-    const {elementId, name, avatar, health, diceRoll, diceCount} = data;
-    let diceHtml ="";
+    const { elementId, name, avatar, health, diceRoll, diceCount } = data;
+    // function .map returns a array for each element of the diceRoll array 
+    // then we isnrert it in the class dice
+    const diceHtml = diceRoll.map(function(num) {
+        return `<div class="dice">${num}</div>`
+        // the .join at the end is used to remove the comas that were there before
+    }).join("");
 
-for (let i =0; i<diceCount; i++) {
-    diceHtml += `<div class="dice">6</div>`
-}
-    
-    document.getElementById(elementId).innerHTML = 
+    document.getElementById(elementId).innerHTML =
         `<div class="character-card">
             <h4 class="name"> ${name} </h4>
             <img class="avatar" src="${avatar}" />
             <div class="health">health: <b> ${health} </b></div>
             <div class="dice-container">
-                ${diceHtml[1]}
+                ${diceHtml}
             </div>
-        </div>`   
+        </div>`
 }
 
 renderCharacter(hero);
